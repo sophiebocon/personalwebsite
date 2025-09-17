@@ -19,8 +19,24 @@ header { display: flex; flex-wrap: wrap; align-items: center; justify-content: s
 nav { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
 nav a { color: var(--muted); text-decoration: none; font-weight: 600; }
 nav a:hover { color: #fff; }
-main { display: grid; grid-template-columns: 1fr 360px; gap: 28px; margin-top: 28px; }
-@media (max-width: 940px) { main { grid-template-columns: 1fr; } .sidebar { order: 2; } }
+main {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 28px;
+    grid-template-areas: "content sidebar";
+    margin-top: 28px;
+}
+main section { grid-area: content; }
+main aside.sidebar { grid-area: sidebar; }
+
+@media (max-width: 940px) {
+    main {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "sidebar"
+            "content";
+    }
+}
 
 .hero { padding: 28px; background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border-radius: var(--radius); box-shadow: 0 6px 30px rgba(2,6,23,0.6); }
 .hero h1 { margin: 0; font-size: 30px; }
