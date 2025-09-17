@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Sophie Bocon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="brand">
+                <div class="logo">SB</div>
+                <div>
+                    <div style="font-weight:700">Sophie Bocon</div>
+                    <div style="font-size:13px;color:var(--muted)">Student • Developer</div>
+                </div>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <button class="btn ghost" id="themeToggle">🌓</button>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero card">
+                <h1>About Me</h1>
+                <p>
+                    I am a student and developer, learning new technologies and building projects.
+                    This page is a place to describe my journey, skills, and interests.
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            © <span id="year"></span> Sophie Bocon — Built with ❤️
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const toggle = document.getElementById('themeToggle');
+
+        function applyTheme() {
+            const light = localStorage.getItem('sb_theme') === 'light';
+            if (light) {
+                document.documentElement.classList.add('light');
+            } else {
+                document.documentElement.classList.remove('light');
+            }
+        }
+
+        toggle.addEventListener('click', () => {
+            const next = localStorage.getItem('sb_theme') === 'light' ? 'dark' : 'light';
+            localStorage.setItem('sb_theme', next);
+            applyTheme();
+        });
+
+        applyTheme();
+    </script>
+</body>
+</html>
