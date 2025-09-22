@@ -5,6 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact — Sophie Bocon</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .card form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card form label {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .card form input,
+        .card form textarea {
+            padding: 12px 14px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: border 0.2s, box-shadow 0.2s;
+            background-color: #fff; 
+            color: #111;            
+            width: 100%;
+        }
+
+        .card form input:focus,
+        .card form textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+        }
+
+        .card form textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        .card form button[type="submit"] {
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            background-color: #4f46e5;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+        }
+
+        .card form button[type="submit"]:hover {
+            background-color: #3730a3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #formSuccess {
+            font-size: 14px;
+            font-weight: 500;
+            color: green;
+        }
+
+
+        html:not(.light) .card form input,
+        html:not(.light) .card form textarea {
+            background-color: #1e1e1e;
+            color: #eee;
+            border: 1px solid #444;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 20px;
+            }
+            .card form button[type="submit"] {
+                font-size: 15px;
+                padding: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="wrap">
@@ -27,10 +105,23 @@
         <main>
             <section class="card">
                 <h1>Contact</h1>
-                <p>
-                    You can reach me via email at 
-                    <strong>contact@sophiebocon.com</strong> or view my projects on GitHub: 
-                    <a href="https://github.com/sophiebocon" target="_blank">GitHub</a>.
+                <p>You can also view my projects on <a href="https://github.com/sophiebocon" target="_blank">GitHub</a>.</p>
+
+                <form action="https://formspree.io/f/manpwdao" method="POST" id="contactForm">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" placeholder="Your Name" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="you@example.com" required>
+
+                    <label for="message">Message</label>
+                    <textarea name="message" id="message" placeholder="Write your message here..." required></textarea>
+
+                    <button type="submit" class="btn">Send</button>
+                </form>
+
+                <p id="formSuccess" style="display:none;margin-top:10px;">
+                    Thank you! Your message has been sent.
                 </p>
             </section>
         </main>
@@ -41,10 +132,8 @@
     </div>
 
     <script>
-        // Update footer year
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Theme toggle functionality
         const toggle = document.getElementById('themeToggle');
 
         function applyTheme() {
@@ -63,6 +152,27 @@
         });
 
         applyTheme();
+
+        const form = document.getElementById('contactForm');
+        const success = document.getElementById('formSuccess');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    success.style.display = 'block';
+                    form.reset();
+                } else {
+                    alert('Oops! There was a problem submitting the form.');
+                }
+            }).catch(() => {
+                alert('Oops! There was a problem submitting the form.');
+            });
+        });
     </script>
 </body>
 </html>
